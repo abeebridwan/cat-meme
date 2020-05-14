@@ -1,0 +1,43 @@
+#catpremium{
+    display : flex;
+    justify-content: center;
+    align-items : center;   
+    border: 5px solid cyan;
+    height:400px;
+    width: 800px;
+    border-radius: 7px;
+   } 
+  
+  #container{  
+    background: cyan;
+    border: 5px solid cyan; 
+    height: 180px;
+    width: 120px;
+    text-align:center;
+    border-radius: 7px;
+    margin-right: 4px;
+  }
+   
+  .catname{
+    padding: 7px 0px;
+    cursor : pointer;
+    border-top: 1px solid white;
+    border-bottom: 1px solid white; 
+    font-weight:bold;
+  }
+  
+  .catdisplay{
+    border: 5px solid cyan;
+    background: LightGray;
+    border-radius: 7px;
+    height:350px;
+    width: 500px;
+    text-align:center;
+  }
+  #displayname, #displaycounte{
+    font-weight:bold; 
+    
+  } 
+  #catimg{
+    border-radius: 5px;
+    cursor : pointe

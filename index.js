@@ -1,8 +1,8 @@
 var model = {
     currentModel : [],                  
       data : [ {
-            catName : "Crazy Cat",
-            src: "https://news.nationalgeographic.com/content/dam/news/photos/000/755/75552.adapt.945.1.jpg",
+            catName : "Cute Cat",
+            src: "https://images.unsplash.com/photo-1586042091284-bd35c8c1d917?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=752&q=80",
             clickcount: 0
           },  
           {
@@ -31,7 +31,7 @@ var model = {
 var octopus = {
       init: function() {
          model.currentModel.push
-         ("Crazy Cat", "https://news.nationalgeographic.com/content/dam/news/photos/000/755/75552.adapt.945.1.jpg", 0 ); 
+         ("Cute Cat", "https://images.unsplash.com/photo-1586042091284-bd35c8c1d917?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=752&q=80", 0 ); 
          view.init();
       },
 
@@ -64,16 +64,24 @@ var octopus = {
      });
        view.countrender();
     },  
-submit : function(a,b,c){ 
-     
-      model.data.forEach(function(val) {
-         if( val["src"] == b){
-           val["catName"] = a.toString(); 
-           val["src"] = b.toString(); 
-           val["clickcount"] = Number(c);                  
-         }         
-     });  
-         view.rewrite(a);      
+ submit : function(a,b,c){ 
+     var stop = false;
+    model.data.forEach(function(val) {
+        if( (val["src"] == b) || (val["catName"] == a)){
+            view.rendererror();  
+            stop = true;                 
+    }      
+ });
+ if(stop){
+     return
+ }
+      var new_value= {
+          catName : a.toString(),
+            src: b.toString(),
+            clickcount: Number(c),        
+      }
+      model.data.push(new_value);
+      view.rewrite(a);      
   }
    
 };
@@ -89,7 +97,8 @@ var view = {
          admin.style.display = "none";
       var cancel = document.getElementById("cancel"); 
       var submit = document.getElementById("submit"); 
-     
+      var error = document.getElementById("error"); 
+      error.style.display = "none";
       container.addEventListener('click', function(e) {
           var name = e.target.textContent;
            octopus.display(name);        
@@ -102,16 +111,19 @@ var view = {
           view.adminrender();
         });  
      button.addEventListener('click', function() {
-          if(admin.style.display == "none"){
+          if(admin.style.display === "none"){
             admin.style.display = "block";
              view.adminrender();
-          }              
+          }else {
+            admin.style.display = "none";
+          }
+            
         }); 
       cancel.addEventListener('click', function() {            
             admin.style.display = "none";                 
         }); 
     
-    submit.addEventListener('click', function() {            
+     submit.addEventListener('click', function() {            
         var inputName = document.getElementById("name").value;
         var inputUrl = document.getElementById("imgurl").value;
         var inputNum = document.getElementById("number").value;
@@ -122,7 +134,7 @@ var view = {
       
       view.render();
       
-      },
+    },
 
    render: function(){    
           var data = octopus.currentdata();     
@@ -143,20 +155,25 @@ adminrender :function(){
         document.getElementById("imgurl").setAttribute("value", data[1]); 
         document.getElementById("number").setAttribute("value", data[2]); 
       },
-rewrite : function(currtCatName){
+ rendererror: function(){
+    var adminsec = document.getElementById("form"); 
+    error.style.display = "block";
+    setTimeout(function(){
+        error.style.display = "none";
+        adminsec.style.display = "none";
+    },3000)
+ }, 
+rewrite : function(a){
   var adminsec = document.getElementById("form"); 
-  var catClass = document.getElementsByClassName("catname"); 
-  var cdata = octopus.currentdata();
-  for (var i=0; i < catClass.length; i++) {
-    if(catClass[i].innerHTML == cdata[0]){
-      catClass[i].innerHTML = currtCatName.toString();
-    }
-  }
- adminsec.style.display = "none";        
-  } 
- };      
+  var node = document.createElement("DIV");
+  var textnode = document.createTextNode(a.toString());
+  node.appendChild(textnode);
+  node.classList.add("catname");
+  document.getElementById("container").appendChild(node);   
+  adminsec.style.display = "none";        
+} 
+};      
 
   
 octopus.init();
-
 

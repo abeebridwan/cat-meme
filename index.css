@@ -68,15 +68,15 @@ body{
   #error{
       color:brown;
   }
-  #form{
-    transition: all ease-out 5s;
-    width: 100%;
+  #form{    
+    display: none;
+    width: 100%;   
   }
 #contain-instructions{   
     display:flex;
     align-items: center;
     font-style: italic;
 }
-label{
+label, legend{
     font-size: 16px;   
 }
